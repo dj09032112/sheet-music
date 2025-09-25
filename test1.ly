@@ -247,7 +247,7 @@ title=test1
 1=C
 4/4
 
-1 215 3 4 ,135' 1 1b3 1
+1 1 Fine 1 1 1 1 1 1 DC
 %}
 
 
@@ -288,12 +288,10 @@ title=test1
 
     \override Staff.TimeSignature #'style = #'numbered
     \override Staff.Stem #'transparent = ##t
-     \mark \markup{1=C} \time 4/4  \note-mod "1" c4 < \note-mod "1" c'  \tweak #'Y-offset #2.0 \note-mod "2" d'  \tweak #'Y-offset #4.0 \note-mod "5" g'  >4
- \note-mod "3" e4  \note-mod "4" f4 | %{ bar 2: %}
-< \note-mod "1" c'  \tweak #'Y-offset #2.0 \note-mod "3" e'  \tweak #'Y-offset #4.0 \note-mod "5" g'' \tweak #'Y-offset #5.6 ^. >4-\tweak #'Y-offset #-1.2 -\tweak #'X-offset #0.6 _. 
- \note-mod "1" c4 < \note-mod "1" c'  \tweak #'Y-offset #2.0 \note-mod "3" ees'  >4
- \note-mod "1" \once \tweak Accidental.extra-offset #'(0 . 0.7)c4
-\bar "|." } }
+     \mark \markup{1=C} \time 4/4  \note-mod "1" c4  \note-mod "1" c4 \once \override Score.RehearsalMark #'break-visibility = #begin-of-line-invisible \once \override Score.RehearsalMark #'self-alignment-X = #RIGHT \mark "Fine" \bar "|."
+ \note-mod "1" c4  \note-mod "1" c4 | %{ bar 2: %}
+ \note-mod "1" c4
+ \note-mod "1" c4  \note-mod "1" c4  \note-mod "1" c4 \once \override Score.RehearsalMark #'break-visibility = #begin-of-line-invisible \once \override Score.RehearsalMark #'self-alignment-X = #RIGHT \mark "D.C. al Fine" \bar "||" } }
 % === END JIANPU STAFF ===
 
 >>
@@ -311,7 +309,9 @@ title="test1"
 << 
 
 % === BEGIN MIDI STAFF ===
-    \new Staff { \new Voice="X" { \transpose c c { \key c \major  \time 4/4 c'4 < c' d' g' >4 e'4 f'4 | %{ bar 2: %} < c e' g'' >4 c'4 < c' ees' >4 c'4 } } }
+    \new Staff { \new Voice="X" { \transpose c c { \key c \major  \time 4/4 c'4 c'4 \once \override Score.RehearsalMark #'break-visibility = #begin-of-line-invisible \once \override Score.RehearsalMark #'self-alignment-X = #RIGHT \mark "Fine" \bar "|."
+c'4 c'4 | %{ bar 2: %} c'4 c'4 c'4 c'4 \once \override Score.RehearsalMark #'break-visibility = #begin-of-line-invisible \once \override Score.RehearsalMark #'self-alignment-X = #RIGHT \mark "D.C. al Fine" \bar "||"
+} } }
 % === END MIDI STAFF ===
 
 >>
