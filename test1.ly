@@ -247,7 +247,7 @@ title=test1
 1=C
 4/4
 
-6\ 6\\ 7\\\ 8\\\\ 9\\\\ \prall 1 ~ 1 ( 2 )
+1/// 1 ~ 1 ( 2 )
 %}
 
 
@@ -278,7 +278,7 @@ title=test1
     \override Tie #'staff-position = #2.5
     \tupletUp
     \tieUp
-    \override Stem #'length-fraction = #0.5
+    \override Stem #'length-fraction = #0
     \override Beam #'beam-thickness = #0.1
     \override Beam #'length-fraction = #0.5
     \override Beam.after-line-breaking = #flip-beams
@@ -288,22 +288,8 @@ title=test1
 
     \override Staff.TimeSignature #'style = #'numbered
     \override Staff.Stem #'transparent = ##t
-     \mark \markup{1=C} \time 4/4 \set stemLeftBeamCount = #0
-\set stemRightBeamCount = #1
- \note-mod "6" a8[
-\set stemLeftBeamCount = #1
-\set stemRightBeamCount = #2
- \note-mod "6" a16
-\set stemLeftBeamCount = #2
-\set stemRightBeamCount = #3
- \note-mod "7" b32
-\set stemLeftBeamCount = #3
-\set stemRightBeamCount = #4
- \note-mod "1" c64^.
-\set stemLeftBeamCount = #4
-\set stemRightBeamCount = #4
- \note-mod "2" d64^.]
-\prall  \note-mod "1" c4 ~  \note-mod "1" c4 (  \note-mod "2" d4 ) \bar "|." } }
+     \mark \markup{1=C} \time 4/4  \note-mod "1" c4_\tweak outside-staff-priority ##f ^\tweak avoid-slur #'inside _\markup {\with-dimensions #'(0 . 0) #'(2.5 . 2.1) \postscript "1.1 0.4 moveto 2.1 1.4 lineto 1.3 0.2 moveto 2.3 1.2 lineto 1.5 0.0 moveto 2.5 1.0 lineto stroke" } %{ requires Lilypond 2.22+ %} 
+ \note-mod "1" c4 ~  \note-mod "1" c4 (  \note-mod "2" d4 ) \bar "|." } }
 % === END JIANPU STAFF ===
 
 >>
@@ -321,7 +307,7 @@ title="test1"
 << 
 
 % === BEGIN MIDI STAFF ===
-    \new Staff { \new Voice="X" { \transpose c c { \key c \major  \time 4/4 a'8 a'16 b'32 c''64 d''64 \prall c'2 ( d'4 ) } } }
+    \new Staff { \new Voice="X" { \transpose c c { \key c \major  \time 4/4 c'4:32 c'2 ( d'4 ) } } }
 % === END MIDI STAFF ===
 
 >>
