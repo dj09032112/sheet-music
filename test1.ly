@@ -247,7 +247,7 @@ title=test1
 1=C
 4/4
 
-1 2 3 4 1 1 1 1
+1 2 3 4 3[ q1 q1 q1 ] 1 1 1
 %}
 
 
@@ -288,9 +288,16 @@ title=test1
 
     \override Staff.TimeSignature #'style = #'numbered
     \override Staff.Stem #'transparent = ##t
-     \mark \markup{1=C} \time 4/4  \note-mod "1" c4  \note-mod "2" d4  \note-mod "3" e4  \note-mod "4" f4 | %{ bar 2: %}
- \note-mod "1" c4
- \note-mod "1" c4  \note-mod "1" c4  \note-mod "1" c4 \bar "|." } }
+     \mark \markup{1=C} \time 4/4  \note-mod "1" c4  \note-mod "2" d4  \note-mod "3" e4  \note-mod "4" f4 \times 2/3 { | %{ bar 2: %} \set stemLeftBeamCount = #0
+\set stemRightBeamCount = #1
+ \note-mod "1" c8[
+\set stemLeftBeamCount = #1
+\set stemRightBeamCount = #1
+ \note-mod "1" c8
+\set stemLeftBeamCount = #1
+\set stemRightBeamCount = #1
+ \note-mod "1" c8]
+}  \note-mod "1" c4  \note-mod "1" c4  \note-mod "1" c4 \bar "|." } }
 % === END JIANPU STAFF ===
 
 >>
@@ -308,7 +315,7 @@ title="test1"
 << 
 
 % === BEGIN MIDI STAFF ===
-    \new Staff { \new Voice="X" { \transpose c c { \key c \major  \time 4/4 c'4 d'4 e'4 f'4 | %{ bar 2: %} c'4 c'4 c'4 c'4 } } }
+    \new Staff { \new Voice="X" { \transpose c c { \key c \major  \time 4/4 c'4 d'4 e'4 f'4 \times 2/3 { | %{ bar 2: %} c'8 c'8 c'8 } c'4 c'4 c'4 } } }
 % === END MIDI STAFF ===
 
 >>
