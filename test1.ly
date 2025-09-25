@@ -247,7 +247,7 @@ title=test1
 1=C
 4/4
 
-1 1 Fine 1 1 1 1 1 1 DC
+R{ 1 1 1 } A{ 2 | 3 }
 %}
 
 
@@ -288,10 +288,7 @@ title=test1
 
     \override Staff.TimeSignature #'style = #'numbered
     \override Staff.Stem #'transparent = ##t
-     \mark \markup{1=C} \time 4/4  \note-mod "1" c4  \note-mod "1" c4 \once \override Score.RehearsalMark #'break-visibility = #begin-of-line-invisible \once \override Score.RehearsalMark #'self-alignment-X = #RIGHT \mark "Fine" \bar "|."
- \note-mod "1" c4  \note-mod "1" c4 | %{ bar 2: %}
- \note-mod "1" c4
- \note-mod "1" c4  \note-mod "1" c4  \note-mod "1" c4 \once \override Score.RehearsalMark #'break-visibility = #begin-of-line-invisible \once \override Score.RehearsalMark #'self-alignment-X = #RIGHT \mark "D.C. al Fine" \bar "||" } }
+     \mark \markup{1=C} \time 4/4 \repeat volta 2 {  \note-mod "1" c4  \note-mod "1" c4  \note-mod "1" c4 } \alternative { {  \note-mod "2" d4 } {  \note-mod "3" e4 }} \bar "|." } }
 % === END JIANPU STAFF ===
 
 >>
@@ -309,9 +306,7 @@ title="test1"
 << 
 
 % === BEGIN MIDI STAFF ===
-    \new Staff { \new Voice="X" { \transpose c c { \key c \major  \time 4/4 c'4 c'4 \once \override Score.RehearsalMark #'break-visibility = #begin-of-line-invisible \once \override Score.RehearsalMark #'self-alignment-X = #RIGHT \mark "Fine" \bar "|."
-c'4 c'4 | %{ bar 2: %} c'4 c'4 c'4 c'4 \once \override Score.RehearsalMark #'break-visibility = #begin-of-line-invisible \once \override Score.RehearsalMark #'self-alignment-X = #RIGHT \mark "D.C. al Fine" \bar "||"
-} } }
+    \new Staff { \new Voice="X" { \transpose c c { \key c \major  \time 4/4 \repeat volta 2 { c'4 c'4 c'4 } \alternative { { d'4 } { e'4 }} } } }
 % === END MIDI STAFF ===
 
 >>
