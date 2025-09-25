@@ -1,4 +1,4 @@
-\version "2.20.0"
+\version "2.22.0"
 #(set-global-staff-size 20)
 
 % un-comment the next line to remove Lilypond tagline:
@@ -100,7 +100,7 @@ note-mod =
           (Y-ext (ly:relative-group-extent elts refp-Y Y))
           (direction (ly:grob-property grob 'direction RIGHT))
           (x-start (* 0.5 (+ (car X-ext) (cdr X-ext))))
-          (y-start (+ (car Y-ext) 0.32))
+          (y-start (+ (car Y-ext) -0.2))
           (x-start2 (if (eq? direction RIGHT)(+ x-start 0.5)(- x-start 0.5)))
           (x-end (if (eq? direction RIGHT)(+ (cdr X-ext) 0.2)(- (car X-ext) 0.2)))
           (y-end (- y-start 0.5))
@@ -247,7 +247,7 @@ title=test1
 1=C
 4/4
 
-1 2 3 4 3[ q1 q1 q1 ] 1 1 1
+1 2 3 4 3[ q1 q1 q1 ] g[#45] 1 1 ['1]g g[d4d5s6] 1
 %}
 
 
@@ -269,8 +269,8 @@ title=test1
     $(add-grace-property 'Voice 'Beam 'beam-thickness 0.1)
     $(add-grace-property 'Voice 'Beam 'length-fraction 0.3)
     $(add-grace-property 'Voice 'Beam 'after-line-breaking flip-beams)
-    $(add-grace-property 'Voice 'Beam 'Y-offset 2.5)
-    $(add-grace-property 'Voice 'NoteHead 'Y-offset 2.5)
+    $(add-grace-property 'Voice 'Beam 'Y-offset 3.5)
+    $(add-grace-property 'Voice 'NoteHead 'Y-offset 3.5)
     }
     { \new Voice="W" {
     \override Beam #'transparent = ##f
@@ -297,7 +297,22 @@ title=test1
 \set stemLeftBeamCount = #1
 \set stemRightBeamCount = #1
  \note-mod "1" c8]
-}  \note-mod "1" c4  \note-mod "1" c4  \note-mod "1" c4 \bar "|." } }
+} \grace { \jianpuGraceCurveStart \set stemLeftBeamCount = #2
+\set stemRightBeamCount = #2
+ \note-mod "4" \once \tweak Accidental.extra-offset #'(0 . 0.7)fis16[ \jianpuGraceCurveEnd \set stemLeftBeamCount = #2
+\set stemRightBeamCount = #2
+ \note-mod "5" g16] }
+ \note-mod "1" c4  \afterGrace {  \note-mod "1" c4 } { \once \override Score.JianpuGraceCurve.direction = #LEFT \jianpuGraceCurveStart \set stemLeftBeamCount = #0
+\set stemRightBeamCount = #2
+ \note-mod "1" c16^.[ \jianpuGraceCurveEnd s16] }
+\grace { \jianpuGraceCurveStart \set stemLeftBeamCount = #0
+\set stemRightBeamCount = #3
+ \note-mod "4" f32[\set stemLeftBeamCount = #3
+\set stemRightBeamCount = #3
+ \note-mod "5" g32 \jianpuGraceCurveEnd \set stemLeftBeamCount = #2
+\set stemRightBeamCount = #2
+ \note-mod "6" a16] }
+ \note-mod "1" c4 \bar "|." } }
 % === END JIANPU STAFF ===
 
 >>
@@ -315,7 +330,7 @@ title="test1"
 << 
 
 % === BEGIN MIDI STAFF ===
-    \new Staff { \new Voice="X" { \transpose c c { \key c \major  \time 4/4 c'4 d'4 e'4 f'4 \times 2/3 { | %{ bar 2: %} c'8 c'8 c'8 } c'4 c'4 c'4 } } }
+    \new Staff { \new Voice="X" { \transpose c c { \key c \major  \time 4/4 c'4 d'4 e'4 f'4 \times 2/3 { | %{ bar 2: %} c'8 c'8 c'8 } \grace { fis'16 g'16 } c'4  \afterGrace { c'4 } { c''16 } \grace { f'32 g'32 a'16 } c'4 } } }
 % === END MIDI STAFF ===
 
 >>
