@@ -1,4 +1,4 @@
-\version "2.20.0"
+\version "2.22.0"
 #(set-global-staff-size 20)
 
 % un-comment the next line to remove Lilypond tagline:
@@ -100,7 +100,7 @@ note-mod =
           (Y-ext (ly:relative-group-extent elts refp-Y Y))
           (direction (ly:grob-property grob 'direction RIGHT))
           (x-start (* 0.5 (+ (car X-ext) (cdr X-ext))))
-          (y-start (+ (car Y-ext) 0.32))
+          (y-start (+ (car Y-ext) -0.2))
           (x-start2 (if (eq? direction RIGHT)(+ x-start 0.5)(- x-start 0.5)))
           (x-end (if (eq? direction RIGHT)(+ (cdr X-ext) 0.2)(- (car X-ext) 0.2)))
           (y-end (- y-start 0.5))
@@ -242,13 +242,28 @@ jianpuGraceCurveEnd =
 %===========================================================
 
 %{ The jianpu-ly input was:
-title=test1
-
-1=C
+title = Temp
+composer = Kai
+1=bE
+7/4
+4=69
+instrument = 高胡
+ 2 3b 4# 5 6 7b 1'
+4 5 6b 7b 1' 2b' 3
+ 2 letterA 3b up 4# down 5/// 6 7b 1#' bend 
+ \break
 4/4
-4=120
-
-1 \> 1 1 2 1      1 1 1
+ R2{ 6 \upbow letterB \mf \< - - 5\ Fr=◇ \! ( 6\ \prall  ) } 7b \downbow  \fermata - - - - - - - | 
+ 2'///\ ^"foo"_"bar" ( 1' ) 7b'. 6\ Fr=> ( 7b\  \mordent )  1'  \turn - - - 
+ 1=F
+ g[d7b] 1' Fr=_ \cresc ( -  1'\ ) 6\ Fr=2 7b\ Fr=内二 ( 1'\ Fr=外 ) | 1' 7 6 Fr=▼ 5 4. 5\ 6\ 1'\ 0 
+ R*8 0 0 0 0\\ x\.  
+ 2 \trill 2  harmonic 8 Fr=x 9 Fr=+
+ % 这一行中后面的内容是注释
+\pageBreak
+ NextPart
+ instrument = Erhu
+  15 - - - - - 22'  -\ 33'\\\ 44'\\\ 5#5#'\\\  66'\\\
 %}
 
 
@@ -261,6 +276,7 @@ title=test1
     \new RhythmicStaff \with {
     \consists "Accidental_engraver" 
     \consists \jianpuGraceCurveEngraver
+instrumentName = "高胡"
     % Get rid of the stave but not the barlines:
     \override StaffSymbol #'line-count = #0 % tested in 2.15.40, 2.16.2, 2.18.0, 2.18.2, 2.20.0 and 2.22.2
     \override BarLine #'bar-extent = #'(-2 . 2) % LilyPond 2.18: please make barlines as high as the time signature even though we're on a RhythmicStaff (2.16 and 2.15 don't need this although its presence doesn't hurt; Issue 3685 seems to indicate they'll fix it post-2.18)
@@ -270,8 +286,8 @@ title=test1
     $(add-grace-property 'Voice 'Beam 'beam-thickness 0.1)
     $(add-grace-property 'Voice 'Beam 'length-fraction 0.3)
     $(add-grace-property 'Voice 'Beam 'after-line-breaking flip-beams)
-    $(add-grace-property 'Voice 'Beam 'Y-offset 2.5)
-    $(add-grace-property 'Voice 'NoteHead 'Y-offset 2.5)
+    $(add-grace-property 'Voice 'Beam 'Y-offset 3.5)
+    $(add-grace-property 'Voice 'NoteHead 'Y-offset 3.5)
     }
     { \new Voice="W" {
     \override Beam #'transparent = ##f
@@ -279,7 +295,7 @@ title=test1
     \override Tie #'staff-position = #2.5
     \tupletUp
     \tieUp
-    \override Stem #'length-fraction = #0
+    \override Stem #'length-fraction = #0.5
     \override Beam #'beam-thickness = #0.1
     \override Beam #'length-fraction = #0.5
     \override Beam.after-line-breaking = #flip-beams
@@ -289,14 +305,159 @@ title=test1
 
     \override Staff.TimeSignature #'style = #'numbered
     \override Staff.Stem #'transparent = ##t
-     \mark \markup{1=C} \time 4/4 \tempo 4=120  \note-mod "1" c4 \>  \note-mod "1" c4  \note-mod "1" c4  \note-mod "2" d4 | %{ bar 2: %}
- \note-mod "1" c4
- \note-mod "1" c4  \note-mod "1" c4  \note-mod "1" c4 \bar "|." } }
+     \mark \markup{1=E\flat} \time 7/4 \tempo 4=69  \note-mod "2" d4  \note-mod "3" \once \tweak Accidental.extra-offset #'(0 . 0.7)ees4
+ \note-mod "4" \once \tweak Accidental.extra-offset #'(0 . 0.7)fis4
+ \note-mod "5" g4  \note-mod "6" a4  \note-mod "7" \once \tweak Accidental.extra-offset #'(0 . 0.7)bes4
+ \note-mod "1" c4^. | %{ bar 2: %}
+ \note-mod "4" f4
+ \note-mod "5" g4  \note-mod "6" \once \tweak Accidental.extra-offset #'(0 . 0.7)aes4
+ \note-mod "7" \once \tweak Accidental.extra-offset #'(0 . 0.7)bes4
+ \note-mod "1" c4^.  \note-mod "2" \once \tweak Accidental.extra-offset #'(0 . 0.7)des4^.
+ \note-mod "3" e4 | %{ bar 3: %}
+ \note-mod "2" d4
+\mark \markup{ \box { "A" } }  \note-mod "3" \once \tweak Accidental.extra-offset #'(0 . 0.7)ees4
+\finger \markup { \fontsize #-4 "↗" }   \note-mod "4" \once \tweak Accidental.extra-offset #'(0 . 0.7)fis4
+\finger \markup { \fontsize #-4 "↘" }   \note-mod "5" g4_\tweak outside-staff-priority ##f ^\tweak avoid-slur #'inside _\markup {\with-dimensions #'(0 . 0) #'(2.5 . 2.1) \postscript "1.1 0.4 moveto 2.1 1.4 lineto 1.3 0.2 moveto 2.3 1.2 lineto 1.5 0.0 moveto 2.5 1.0 lineto stroke" } %{ requires Lilypond 2.22+ %} 
+ \note-mod "6" a4  \note-mod "7" \once \tweak Accidental.extra-offset #'(0 . 0.7)bes4
+ \note-mod "1" \once \tweak Accidental.extra-offset #'(0 . 0.7)cis4^.
+\finger \markup { \fontsize #-4 "⤻" }  \break \time 4/4 \repeat percent 2 { \once \override Tie #'transparent = ##t \once \override Tie #'staff-position = #0 | %{ bar 4: %}
+ \note-mod "6" a4
+ ~ \upbow \mark \markup{ \box { "B" } } \mf \< \once \override Tie #'transparent = ##t \once \override Tie #'staff-position = #0  \note-mod "–" a4
+ ~  \note-mod "–" a4 \set stemLeftBeamCount = #0
+\set stemRightBeamCount = #1
+ \note-mod "5" g8[
+\finger \markup { \fontsize #-4 "◇" }  \! ( \set stemLeftBeamCount = #1
+\set stemRightBeamCount = #1
+ \note-mod "6" a8]
+\prall ) } \once \override Tie #'transparent = ##t \once \override Tie #'staff-position = #0 | %{ bar 5: %}
+ \note-mod "7" \once \tweak Accidental.extra-offset #'(0 . 0.7)bes4
+\=JianpuTie(  ~ \downbow \fermata \once \override Tie #'transparent = ##t \once \override Tie #'staff-position = #0  \note-mod "–" bes4
+ ~ \once \override Tie #'transparent = ##t \once \override Tie #'staff-position = #0  \note-mod "–" bes4
+ ~ \once \override Tie #'transparent = ##t \once \override Tie #'staff-position = #0  \note-mod "–" bes4
+ ~ \once \override Tie #'transparent = ##t \once \override Tie #'staff-position = #0 | %{ bar 6: %}
+ \note-mod "7" \once \tweak Accidental.extra-offset #'(0 . 0.7)bes!4 \=JianpuTie)
+ ~ \once \override Tie #'transparent = ##t \once \override Tie #'staff-position = #0  \note-mod "–" bes4
+ ~ \once \override Tie #'transparent = ##t \once \override Tie #'staff-position = #0  \note-mod "–" bes4
+ ~  \note-mod "–" bes4 | | %{ bar 7: %} \set stemLeftBeamCount = #0
+\set stemRightBeamCount = #1
+ \note-mod "2" d8_\tweak outside-staff-priority ##f ^\tweak avoid-slur #'inside _\markup {\with-dimensions #'(0 . 0) #'(2.5 . 2.1) \postscript "1.1 0.4 moveto 2.1 1.4 lineto 1.3 0.2 moveto 2.3 1.2 lineto 1.5 0.0 moveto 2.5 1.0 lineto stroke" } %{ requires Lilypond 2.22+ %} ^.[
+]  ^"foo"_"bar" (  \note-mod "1" c4^. )  \note-mod "7" \once \tweak Accidental.extra-offset #'(0 . 0.7)bes4.^.
+\set stemLeftBeamCount = #0
+\set stemRightBeamCount = #1
+ \note-mod "6" a8[
+\finger \markup { \fontsize #-4 ">" }  ( \set stemLeftBeamCount = #1
+\set stemRightBeamCount = #1
+ \note-mod "7" \once \tweak Accidental.extra-offset #'(0 . 0.7)bes8]
+\mordent ) \once \override Tie #'transparent = ##t \once \override Tie #'staff-position = #0 | %{ bar 8: %}
+ \note-mod "1" c4^.
+ ~ \turn \once \override Tie #'transparent = ##t \once \override Tie #'staff-position = #0  \note-mod "–" c4
+ ~ \once \override Tie #'transparent = ##t \once \override Tie #'staff-position = #0  \note-mod "–" c4
+ ~  \note-mod "–" c4 \mark \markup{1=F} \grace { \jianpuGraceCurveStart s32 [ \jianpuGraceCurveEnd \set stemLeftBeamCount = #3
+\set stemRightBeamCount = #3
+ \note-mod "7" \once \tweak Accidental.extra-offset #'(0 . 0.7)bes32] }
+\once \override Tie #'transparent = ##t \once \override Tie #'staff-position = #0 | %{ bar 9: %}
+ \note-mod "1" c4^.
+ ~ \finger \markup { \fontsize #-4 "_" }  \cresc (  \note-mod "–" c4 \set stemLeftBeamCount = #0
+\set stemRightBeamCount = #1
+ \note-mod "1" c8^.[
+) \set stemLeftBeamCount = #1
+\set stemRightBeamCount = #1
+ \note-mod "6" a8]
+\finger \markup { \fontsize #-4 "二" }  \set stemLeftBeamCount = #0
+\set stemRightBeamCount = #1
+ \note-mod "7" \once \tweak Accidental.extra-offset #'(0 . 0.7)bes8[
+\finger \markup { \fontsize #-4 "内二" }  ( \set stemLeftBeamCount = #1
+\set stemRightBeamCount = #1
+ \note-mod "1" c8^.]
+\finger \markup { \fontsize #-4 "外" }  ) | | %{ bar 10: %}
+ \note-mod "1" c4^.
+ \note-mod "7" b4  \note-mod "6" a4 \finger \markup { \fontsize #-4 "▼" }   \note-mod "5" g4 | %{ bar 11: %}
+ \note-mod "4" f4.
+\set stemLeftBeamCount = #0
+\set stemRightBeamCount = #1
+ \note-mod "5" g8[]
+\set stemLeftBeamCount = #0
+\set stemRightBeamCount = #1
+ \note-mod "6" a8[
+\set stemLeftBeamCount = #1
+\set stemRightBeamCount = #1
+ \note-mod "1" c8^.]
+ \note-mod "0" r4 \set Score.skipBars = ##t \override MultiMeasureRest #'expand-limit = #1 
+R1*8 | %{ bar 12: %}
+ \note-mod "0" r4
+ \note-mod "0" r4  \note-mod "0" r4 \set stemLeftBeamCount = #0
+\set stemRightBeamCount = #2
+ \note-mod "0" c16[
+\set stemLeftBeamCount = #1
+\set stemRightBeamCount = #1
+ \note-mod "x" c8.]
+| %{ bar 13: %}
+ \note-mod "2" d4
+\trill  \note-mod "2" d4 \finger \markup { \fontsize #-4 "○" }   \note-mod "1" c4^. \finger \markup { \fontsize #-4 "x" }   \note-mod "2" d4^. \finger \markup { \fontsize #-4 "+" }  \pageBreak \bar "|." } }
+% === END JIANPU STAFF ===
+
+
+%% === BEGIN JIANPU STAFF ===
+    \new RhythmicStaff \with {
+    \consists "Accidental_engraver" 
+    \consists \jianpuGraceCurveEngraver
+instrumentName = "Erhu"
+    % Get rid of the stave but not the barlines:
+    \override StaffSymbol #'line-count = #0 % tested in 2.15.40, 2.16.2, 2.18.0, 2.18.2, 2.20.0 and 2.22.2
+    \override BarLine #'bar-extent = #'(-2 . 2) % LilyPond 2.18: please make barlines as high as the time signature even though we're on a RhythmicStaff (2.16 and 2.15 don't need this although its presence doesn't hurt; Issue 3685 seems to indicate they'll fix it post-2.18)
+    $(add-grace-property 'Voice 'Stem 'direction DOWN)
+    $(add-grace-property 'Voice 'Slur 'direction UP)
+    $(add-grace-property 'Voice 'Stem 'length-fraction 0.5)
+    $(add-grace-property 'Voice 'Beam 'beam-thickness 0.1)
+    $(add-grace-property 'Voice 'Beam 'length-fraction 0.3)
+    $(add-grace-property 'Voice 'Beam 'after-line-breaking flip-beams)
+    $(add-grace-property 'Voice 'Beam 'Y-offset 3.5)
+    $(add-grace-property 'Voice 'NoteHead 'Y-offset 3.5)
+    }
+    { \new Voice="X" {
+    \override Beam #'transparent = ##f
+    \override Stem #'direction = #DOWN
+    \override Tie #'staff-position = #2.5
+    \tupletUp
+    \tieUp
+    \override Stem #'length-fraction = #0.5
+    \override Beam #'beam-thickness = #0.1
+    \override Beam #'length-fraction = #0.5
+    \override Beam.after-line-breaking = #flip-beams
+    \override Voice.Rest #'style = #'neomensural % this size tends to line up better (we'll override the appearance anyway)
+    \override Accidental #'font-size = #-4
+    \override TupletBracket #'bracket-visibility = ##t
+
+    \override Staff.TimeSignature #'style = #'numbered
+    \override Staff.Stem #'transparent = ##t
+     \once \override Tie #'transparent = ##t \once \override Tie #'staff-position = #0 < \note-mod "1" c'  \tweak #'Y-offset #2.0 \note-mod "5" g'  >4
+\=JianpuTie(  ~ \once \override Tie #'transparent = ##t \once \override Tie #'staff-position = #0  \note-mod "–" g'4
+ ~ \once \override Tie #'transparent = ##t \once \override Tie #'staff-position = #0  \note-mod "–" g'4
+ ~ \once \override Tie #'transparent = ##t \once \override Tie #'staff-position = #0  \note-mod "–" g'4
+ ~ \once \override Tie #'transparent = ##t \once \override Tie #'staff-position = #0 | %{ bar 2: %}
+< \note-mod "1" c'  \tweak #'Y-offset #2.0 \note-mod "5" g'  >4 \=JianpuTie)
+ ~  \note-mod "–" g'4 \once \override Tie #'transparent = ##t \once \override Tie #'staff-position = #0 < \note-mod "2" d'  \tweak #'Y-offset #2.0 \note-mod "2" d'' \tweak #'Y-offset #3.6 ^. >4
+ ~ \set stemLeftBeamCount = #1
+\set stemRightBeamCount = #1
+ \note-mod "–" d''8[
+\set stemLeftBeamCount = #1
+\set stemRightBeamCount = #3
+< \note-mod "3" e'  \tweak #'Y-offset #2.0 \note-mod "3" e'' \tweak #'Y-offset #3.6 ^. >32
+\set stemLeftBeamCount = #3
+\set stemRightBeamCount = #3
+< \note-mod "4" f'  \tweak #'Y-offset #2.0 \note-mod "4" f'' \tweak #'Y-offset #3.6 ^. >32
+\set stemLeftBeamCount = #3
+\set stemRightBeamCount = #3
+< \note-mod "5" gis'  \tweak #'Y-offset #2.0 \note-mod "5" gis'' \tweak #'Y-offset #3.6 ^. >32
+\set stemLeftBeamCount = #3
+\set stemRightBeamCount = #3
+< \note-mod "6" a'  \tweak #'Y-offset #2.0 \note-mod "6" a'' \tweak #'Y-offset #3.6 ^. >32] } }
 % === END JIANPU STAFF ===
 
 >>
 \header{
-title="test1"
+title="Temp"
+composer="Kai"
 }
 \layout{
   \context {
@@ -309,11 +470,18 @@ title="test1"
 << 
 
 % === BEGIN MIDI STAFF ===
-    \new Staff { \new Voice="X" { \transpose c c { \key c \major  \time 4/4 \tempo 4=120 c'4 \> c'4 c'4 d'4 | %{ bar 2: %} c'4 c'4 c'4 c'4 } } }
+    \new Staff { \new Voice="Y" { \transpose c ees { \key c \major  \time 7/4 \tempo 4=69 d'4 ees'4 fis'4 g'4 a'4 bes'4 c''4 | %{ bar 2: %} f'4 g'4 aes'4 bes'4 c''4 des''4 e'4 | %{ bar 3: %} d'4 \mark \markup{ \box { "A" } } ees'4 \finger \markup { \fontsize #-4 "↗" }  fis'4 \finger \markup { \fontsize #-4 "↘" }  g'4:32 a'4 bes'4 cis''4 \finger \markup { \fontsize #-4 "⤻" }  \break \time 4/4 \repeat percent 2 { | %{ bar 4: %} a'4  ~ \upbow \mark \markup{ \box { "B" } } \mf \< a'2 g'8 \finger \markup { \fontsize #-4 "◇" }  \! ( a'8 \prall ) } | %{ bar 5: %} bes'1 \downbow \fermata  ~ | %{ bar 6: %} bes'1 | | %{ bar 7: %} d''8:32 ^"foo"_"bar" ( c''4 ) bes''4. a'8 \finger \markup { \fontsize #-4 ">" }  ( bes'8 \mordent ) | %{ bar 8: %} c''1 \turn } \transpose c f { \key c \major  \grace { bes'32 } | %{ bar 9: %} c''4  ~ \finger \markup { \fontsize #-4 "_" }  \cresc ( c''4 c''8 ) a'8 \finger \markup { \fontsize #-4 "二" }  bes'8 \finger \markup { \fontsize #-4 "内二" }  ( c''8 \finger \markup { \fontsize #-4 "外" }  ) | | %{ bar 10: %} c''4 b'4 a'4 \finger \markup { \fontsize #-4 "▼" }  g'4 | %{ bar 11: %} f'4. g'8 a'8 c''8 r4 \set Score.skipBars = ##t \override MultiMeasureRest #'expand-limit = #1 
+R1*8 | %{ bar 12: %} r2. r16 c'8. | %{ bar 13: %} d'4 \trill d'4 \finger \markup { \fontsize #-4 "○" }  c''4 \finger \markup { \fontsize #-4 "x" }  d''4 \finger \markup { \fontsize #-4 "+" }  \pageBreak } } }
+% === END MIDI STAFF ===
+
+
+% === BEGIN MIDI STAFF ===
+    \new Staff { \new Voice="Z" { < c' g' >1  ~ | %{ bar 2: %} < c' g' >2 < d' d'' >4  ~ < d' d'' >8 < e' e'' >32 < f' f'' >32 < gis' gis'' >32 < a' a'' >32 } }
 % === END MIDI STAFF ===
 
 >>
 \header{
-title="test1"
+title="Temp"
+composer="Kai"
 }
 \midi { \context { \Score tempoWholesPerMinute = #(ly:make-moment 84 4)}} }
