@@ -247,7 +247,7 @@ title=test1
 1=C
 4/4
 
-1 5 1 ~ 2
+1 5 1 ( 2 )
 %}
 
 
@@ -288,7 +288,7 @@ title=test1
 
     \override Staff.TimeSignature #'style = #'numbered
     \override Staff.Stem #'transparent = ##t
-     \mark \markup{1=C} \time 4/4  \note-mod "1" c4  \note-mod "5" g4  \note-mod "1" c4 ~  \note-mod "2" d4 \bar "|." } }
+     \mark \markup{1=C} \time 4/4  \note-mod "1" c4  \note-mod "5" g4  \note-mod "1" c4 (  \note-mod "2" d4 ) \bar "|." } }
 % === END JIANPU STAFF ===
 
 >>
@@ -306,7 +306,7 @@ title="test1"
 << 
 
 % === BEGIN MIDI STAFF ===
-    \new Staff { \new Voice="X" { \transpose c c { \key c \major  \time 4/4 c'4 g'4 c'4 ~ d'4 } } }
+    \new Staff { \new Voice="X" { \transpose c c { \key c \major  \time 4/4 c'4 g'4 c'4 ( d'4 ) } } }
 % === END MIDI STAFF ===
 
 >>
