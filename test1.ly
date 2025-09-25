@@ -246,6 +246,7 @@ title=test1
 
 1=C
 4/4
+4=120
 
 1/// letterB 1 ~ 1 ( 2 )
 %}
@@ -288,7 +289,7 @@ title=test1
 
     \override Staff.TimeSignature #'style = #'numbered
     \override Staff.Stem #'transparent = ##t
-     \mark \markup{1=C} \time 4/4  \note-mod "1" c4_\tweak outside-staff-priority ##f ^\tweak avoid-slur #'inside _\markup {\with-dimensions #'(0 . 0) #'(2.5 . 2.1) \postscript "1.1 0.4 moveto 2.1 1.4 lineto 1.3 0.2 moveto 2.3 1.2 lineto 1.5 0.0 moveto 2.5 1.0 lineto stroke" } %{ requires Lilypond 2.22+ %} 
+     \mark \markup{1=C} \time 4/4 \tempo 4=120  \note-mod "1" c4_\tweak outside-staff-priority ##f ^\tweak avoid-slur #'inside _\markup {\with-dimensions #'(0 . 0) #'(2.5 . 2.1) \postscript "1.1 0.4 moveto 2.1 1.4 lineto 1.3 0.2 moveto 2.3 1.2 lineto 1.5 0.0 moveto 2.5 1.0 lineto stroke" } %{ requires Lilypond 2.22+ %} 
 \mark \markup{ \box { "B" } }  \note-mod "1" c4 ~  \note-mod "1" c4 (  \note-mod "2" d4 ) \bar "|." } }
 % === END JIANPU STAFF ===
 
@@ -307,7 +308,7 @@ title="test1"
 << 
 
 % === BEGIN MIDI STAFF ===
-    \new Staff { \new Voice="X" { \transpose c c { \key c \major  \time 4/4 c'4:32 \mark \markup{ \box { "B" } } c'2 ( d'4 ) } } }
+    \new Staff { \new Voice="X" { \transpose c c { \key c \major  \time 4/4 \tempo 4=120 c'4:32 \mark \markup{ \box { "B" } } c'2 ( d'4 ) } } }
 % === END MIDI STAFF ===
 
 >>
