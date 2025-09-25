@@ -248,7 +248,7 @@ title=test1
 4/4
 4=120
 
-1   1 1 ( 2 1 1  1 ) 1 \( 1 1 1 1 \)
+1   1 1 2 1 1  [( 1 1 1 1 )] 1 1
 %}
 
 
@@ -273,7 +273,7 @@ title=test1
     $(add-grace-property 'Voice 'Beam 'Y-offset 2.5)
     $(add-grace-property 'Voice 'NoteHead 'Y-offset 2.5)
     }
-    { \new Voice="W" {
+    { \new Voice="X" {
     \override Beam #'transparent = ##f
     \override Stem #'direction = #DOWN
     \override Tie #'staff-position = #2.5
@@ -289,11 +289,24 @@ title=test1
 
     \override Staff.TimeSignature #'style = #'numbered
     \override Staff.Stem #'transparent = ##t
-     \mark \markup{1=C} \time 4/4 \tempo 4=120  \note-mod "1" c4  \note-mod "1" c4  \note-mod "1" c4 (  \note-mod "2" d4 | %{ bar 2: %}
+     \mark \markup{1=C} \time 4/4 \tempo 4=120  \note-mod "1" c4  \note-mod "1" c4  \note-mod "1" c4  \note-mod "2" d4 | %{ bar 2: %}
  \note-mod "1" c4
- \note-mod "1" c4  \note-mod "1" c4 )  \note-mod "1" c4 \( | %{ bar 3: %}
+ \note-mod "1" c4 \new Voice="W" {
+    \override Beam #'transparent = ##f
+    \override Stem #'direction = #DOWN
+    \override Tie #'staff-position = #2.5
+    \tupletUp
+    \tieUp
+    \override Stem #'length-fraction = #0
+    \override Beam #'beam-thickness = #0.1
+    \override Beam #'length-fraction = #0.5
+    \override Beam.after-line-breaking = #flip-beams
+    \override Voice.Rest #'style = #'neomensural % this size tends to line up better (we'll override the appearance anyway)
+    \override Accidental #'font-size = #-4
+    \override TupletBracket #'bracket-visibility = ##t
+\cadenzaOn \note-mod "(" r8 \cadenzaOff   \note-mod "1" c4  \note-mod "1" c4 | %{ bar 3: %}
  \note-mod "1" c4
- \note-mod "1" c4  \note-mod "1" c4  \note-mod "1" c4 \) \bar "|." } }
+ \note-mod "1" c4 \cadenzaOn \note-mod ")" r8 \cadenzaOff  }  \note-mod "1" c4  \note-mod "1" c4 \bar "|." } }
 % === END JIANPU STAFF ===
 
 >>
@@ -311,7 +324,7 @@ title="test1"
 << 
 
 % === BEGIN MIDI STAFF ===
-    \new Staff { \new Voice="X" { \transpose c c { \key c \major  \time 4/4 \tempo 4=120 c'4 c'4 c'4 ( d'4 | %{ bar 2: %} c'4 c'4 c'4 ) c'4 \( | %{ bar 3: %} c'4 c'4 c'4 c'4 \) } } }
+    \new Staff { \new Voice="Z" { \transpose c c { \key c \major  \time 4/4 \tempo 4=120 c'4 c'4 c'4 d'4 | %{ bar 2: %} c'4 c'4 \new Voice="Y" {  c'4 c'4 | %{ bar 3: %} c'4 c'4 } c'4 c'4 } } }
 % === END MIDI STAFF ===
 
 >>
