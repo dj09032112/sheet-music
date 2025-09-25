@@ -248,7 +248,7 @@ title=test1
 4/4
 4=120
 
-1 souyin 1 harmonic 1 up 2 down
+1 souyin 1 harmonic 1 bend 2 tilde 1 1 1 Fr=哈 1
 %}
 
 
@@ -289,7 +289,9 @@ title=test1
 
     \override Staff.TimeSignature #'style = #'numbered
     \override Staff.Stem #'transparent = ##t
-     \mark \markup{1=C} \time 4/4 \tempo 4=120  \note-mod "1" c4 \finger \markup { \fontsize #-4 "久" }   \note-mod "1" c4 \finger \markup { \fontsize #-4 "○" }   \note-mod "1" c4 \finger \markup { \fontsize #-4 "↗" }   \note-mod "2" d4 \finger \markup { \fontsize #-4 "↘" }  \bar "|." } }
+     \mark \markup{1=C} \time 4/4 \tempo 4=120  \note-mod "1" c4 \finger \markup { \fontsize #-4 "久" }   \note-mod "1" c4 \finger \markup { \fontsize #-4 "○" }   \note-mod "1" c4 \finger \markup { \fontsize #-4 "⤻" }   \note-mod "2" d4 \finger \markup { \fontsize #-4 "∼" }  | %{ bar 2: %}
+ \note-mod "1" c4
+ \note-mod "1" c4  \note-mod "1" c4 \finger \markup { \fontsize #-4 "哈" }   \note-mod "1" c4 \bar "|." } }
 % === END JIANPU STAFF ===
 
 >>
@@ -307,7 +309,7 @@ title="test1"
 << 
 
 % === BEGIN MIDI STAFF ===
-    \new Staff { \new Voice="X" { \transpose c c { \key c \major  \time 4/4 \tempo 4=120 c'4 \finger \markup { \fontsize #-4 "久" }  c'4 \finger \markup { \fontsize #-4 "○" }  c'4 \finger \markup { \fontsize #-4 "↗" }  d'4 \finger \markup { \fontsize #-4 "↘" }  } } }
+    \new Staff { \new Voice="X" { \transpose c c { \key c \major  \time 4/4 \tempo 4=120 c'4 \finger \markup { \fontsize #-4 "久" }  c'4 \finger \markup { \fontsize #-4 "○" }  c'4 \finger \markup { \fontsize #-4 "⤻" }  d'4 \finger \markup { \fontsize #-4 "∼" }  | %{ bar 2: %} c'4 c'4 c'4 \finger \markup { \fontsize #-4 "哈" }  c'4 } } }
 % === END MIDI STAFF ===
 
 >>
